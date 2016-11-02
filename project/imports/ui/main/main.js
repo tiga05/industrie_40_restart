@@ -10,7 +10,7 @@ import template from './main.html';
 //import { name as PartyDetails } from '../partyDetails/partyDetails';
 import { name as Navigation } from '../navigation/navigation';
 import {name as Toolbar} from '../toolbar/toolbar';
-import {name as view1Ctrl} from '../view1/view1';
+import {name as View1} from '../view1/view1';
 import {name as View2} from '../view2/view2';
 
 class Main {}
@@ -20,13 +20,11 @@ const name = 'main';
 // create a module
 export default angular.module(name, [
     angularMeteor,
-    //uiRouter,
-    //PartiesList,
-    //PartyDetails,
+    uiRouter,
     Navigation,
     Toolbar,
-    view1Ctrl,
     View2,
+    View1,
     ngMaterial
 ]).component(name, {
     template,
@@ -34,19 +32,19 @@ export default angular.module(name, [
     controller: Main
 })
     .config(config);
-function config($mdThemingProvider ) {
+function config($mdThemingProvider,$urlRouterProvider,$stateProvider ) {
     'ngInject';
     //$urlRouterProvider
    // $stateProvider
     //$locationProvider.html5Mode(true);
 
-/*    $urlRouterProvider.otherwise('/view1');
+    $urlRouterProvider.otherwise('/view1');
 
     $stateProvider
         .state('view1', {
             url: '/',
             templateUrl: 'test.html'
-        });*/
+        });
 
     $mdThemingProvider
         .theme('default')
