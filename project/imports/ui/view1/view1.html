@@ -47,15 +47,17 @@
             </md-card>
         </div>
     </md-content>
- <!--   <md-content>
+<!--    <md-content>
         <li ng-repeat="drillings in view1.kafkadata">
             {{drillings.value}}
             <p>{{drillings.status}}</p>
         </li>
     </md-content>-->
-    <md-content>
-        <!--{{view1.testdata}}-->
-        {{view1.kafkadata}}
+    <select ng-model="view1.choosenOrderNumber" ng-options="x for x in view1.getOrderNumber">
+    </select>
+    {{view1.choosenOrderNumber}}
 
-    </md-content>
+    <div>
+    {{view1.getOrderDetails}}
+    </div>
 </div>

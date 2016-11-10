@@ -3,7 +3,7 @@ import angularMeteor from 'angular-meteor';
 //import uiRouter from 'angular-ui-router';
 import template from './view1.html';
 import angularCharts from 'angular-chart.js';
-import {Kafkadata} from '../../api/kafkadata'
+import {Kafkadata} from '../../api/kafkadata';
 const name = 'view1';
 
 
@@ -12,18 +12,26 @@ class View1{
     constructor($interval, $scope, $reactive) {
         'ngInject';
         $reactive(this).attach($scope);
-        this.test2="DRILLING";
+       // this.orderNumbers;
+        this.choosenOrderNumber="";
         this.helpers({
+            getOrderNumber(){
+                this.tempVar=Kafkadata.find().fetch();
+                this.distinctArray= _.pluck(this.tempVar, 'orderNumber');
+                this.orderNumbers=_.uniq( this.distinctArray, false);
+                return this.orderNumbers;
+            },
 
             kafkadata() {
                 this.test=Kafkadata.find({itemName:this.test2});
                 return this.test;
                 // this.blabla=JSON.parse(Kafkadata.find({itemName:'DRILLING'}));
             },
-            testdata(){
-                return Kafkadata.find({});
+            getOrderDetails(){
+              return Kafkadata.find({"orderNumber":this.getReactively('choosenOrderNumber')});
             }
         });
+
 
         this.cardRow = [
             {name: 'Drilling Heat', color: 'white', value: 0},

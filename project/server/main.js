@@ -16,5 +16,6 @@ Meteor.startup(() => {
         kafkadata.forEach((party) => {
             Kafkadata.insert(party)
         });
+        Kafkadata.distinct();
     }
 });
