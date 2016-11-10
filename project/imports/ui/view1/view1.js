@@ -3,16 +3,28 @@ import angularMeteor from 'angular-meteor';
 //import uiRouter from 'angular-ui-router';
 import template from './view1.html';
 import angularCharts from 'angular-chart.js';
-
+import {Kafkadata} from '../../api/kafkadata'
 const name = 'view1';
 
 
 
 class View1{
-    constructor($interval, $scope) {
+    constructor($interval, $scope, $reactive) {
         'ngInject';
-        this.test = "testwert1";
+        $reactive(this).attach($scope);
 
+        this.helpers({
+
+            kafkadata() {
+                return Kafkadata.find({itemName:'DRILLING'})
+                // this.blabla=JSON.parse(Kafkadata.find({itemName:'DRILLING'}));
+            },
+            testdata(){
+                return Kafkadata.find({});
+            }
+        });
+        this.testdata="adsasds";
+        this.test = "testwert1";
         this.cardRow = [
             {name: 'Drilling Heat', color: 'white', value: 0},
             {name: 'Drilling Speed', color: 'white', value: 0},
@@ -94,9 +106,6 @@ class View1{
             }
             this.chartRow[y].data[z - 1] = Math.round((Math.random() * 10) * 10);
         }
-    }
-    test2() {
-        this.cardRow.push({name: 'Drilling Heat', color: 'white', value: 0});
     }
 }
 
