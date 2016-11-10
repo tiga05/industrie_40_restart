@@ -8,12 +8,13 @@ import '../own.css';
 import template from './main.html';
 //import { name as PartiesList } from '../partiesList/partiesList';
 //import { name as PartyDetails } from '../partyDetails/partyDetails';
-import { name as Navigation } from '../navigation/navigation';
+import {name as Navigation} from '../navigation/navigation';
 import {name as Toolbar} from '../toolbar/toolbar';
 import {name as View1} from '../view1/view1';
 import {name as View2} from '../view2/view2';
 
-class Main {}
+class Main {
+}
 
 const name = 'main';
 
@@ -32,19 +33,13 @@ export default angular.module(name, [
     controller: Main
 })
     .config(config);
-function config($mdThemingProvider,$urlRouterProvider,$stateProvider ) {
+function config($mdThemingProvider, $urlRouterProvider) {
     'ngInject';
     //$urlRouterProvider
-   // $stateProvider
+    // $stateProvider
     //$locationProvider.html5Mode(true);
 
     $urlRouterProvider.otherwise('/view1');
-
-    $stateProvider
-        .state('view1', {
-            url: '/',
-            templateUrl: 'test.html'
-        });
 
     $mdThemingProvider
         .theme('default')

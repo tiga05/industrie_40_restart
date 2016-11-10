@@ -1,34 +1,33 @@
 import angular from 'angular';
 import angularMeteor from 'angular-meteor';
-//import uiRouter from 'angular-ui-router';
+import uiRouter from 'angular-ui-router';
 import template from './view1.html';
 import angularCharts from 'angular-chart.js';
 import {Kafkadata} from '../../api/kafkadata';
 const name = 'view1';
 
 
-
-class View1{
+class View1 {
     constructor($interval, $scope, $reactive) {
         'ngInject';
         $reactive(this).attach($scope);
-       // this.orderNumbers;
-        this.choosenOrderNumber="";
+        // this.orderNumbers;
+        this.choosenOrderNumber = "";
         this.helpers({
             getOrderNumber(){
-                this.tempVar=Kafkadata.find().fetch();
-                this.distinctArray= _.pluck(this.tempVar, 'orderNumber');
-                this.orderNumbers=_.uniq( this.distinctArray, false);
+                this.tempVar = Kafkadata.find().fetch();
+                this.distinctArray = _.pluck(this.tempVar, 'orderNumber');
+                this.orderNumbers = _.uniq(this.distinctArray, false);
                 return this.orderNumbers;
             },
 
             kafkadata() {
-                this.test=Kafkadata.find({itemName:this.test2});
+                this.test = Kafkadata.find({itemName: this.test2});
                 return this.test;
                 // this.blabla=JSON.parse(Kafkadata.find({itemName:'DRILLING'}));
             },
             getOrderDetails(){
-              return Kafkadata.find({"orderNumber":this.getReactively('choosenOrderNumber')});
+                return Kafkadata.find({"orderNumber": this.getReactively('choosenOrderNumber')});
             }
         });
 
@@ -121,20 +120,20 @@ class View1{
 export default angular.module(name, [
     angularMeteor,
     angularCharts,
-   // uiRouter
+    uiRouter
 ]).component(name, {
     template,
     controllerAs: name,
-    controller:View1
+    controller: View1
 })
 
-/*
+    .config(config);
+
 function config($stateProvider) {
     'ngInject';
     $stateProvider
         .state('view1', {
             url: '/view1',
-            template: template
+            template: '<view1></view1>'
         });
 }
-*/
