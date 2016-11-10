@@ -12,19 +12,19 @@ class View1{
     constructor($interval, $scope, $reactive) {
         'ngInject';
         $reactive(this).attach($scope);
-
+        this.test2="DRILLING";
         this.helpers({
 
             kafkadata() {
-                return Kafkadata.find({itemName:'DRILLING'})
+                this.test=Kafkadata.find({itemName:this.test2});
+                return this.test;
                 // this.blabla=JSON.parse(Kafkadata.find({itemName:'DRILLING'}));
             },
             testdata(){
                 return Kafkadata.find({});
             }
         });
-        this.testdata="adsasds";
-        this.test = "testwert1";
+
         this.cardRow = [
             {name: 'Drilling Heat', color: 'white', value: 0},
             {name: 'Drilling Speed', color: 'white', value: 0},

@@ -2,7 +2,6 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
           rel="stylesheet">
     <md-content class="md-padding md-primary" layout-xs="column" layout="row">
-        {{view1.testdata}}
         <div flex layout="row" layout-sm="column" layout-xs="column">
             <md-card flex ng-repeat="entries in view1.cardRow" ng-class="entries.color">
                 <md-card-title>
@@ -48,7 +47,15 @@
             </md-card>
         </div>
     </md-content>
+ <!--   <md-content>
+        <li ng-repeat="drillings in view1.kafkadata">
+            {{drillings.value}}
+            <p>{{drillings.status}}</p>
+        </li>
+    </md-content>-->
     <md-content>
-    {{view1.kafkadata}}
+        <!--{{view1.testdata}}-->
+        {{view1.kafkadata}}
+
     </md-content>
 </div>
