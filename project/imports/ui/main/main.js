@@ -2,12 +2,9 @@ import angular from 'angular';
 import angularMeteor from 'angular-meteor';
 import uiRouter from 'angular-ui-router';
 import ngMaterial from 'angular-material';
-//import '../node_modules/angular-material/angular-material.css';
 import '../../../node_modules/angular-material/angular-material.css'
 import '../own.css';
 import template from './main.html';
-//import { name as PartiesList } from '../partiesList/partiesList';
-//import { name as PartyDetails } from '../partyDetails/partyDetails';
 import {name as Navigation} from '../navigation/navigation';
 import {name as Toolbar} from '../toolbar/toolbar';
 import {name as View1} from '../view1/view1';
