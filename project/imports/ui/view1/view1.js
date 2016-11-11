@@ -10,6 +10,7 @@ const name = 'view1';
 class View1 {
     constructor($interval, $scope, $reactive) {
         'ngInject';
+        this.checked=true;
         $reactive(this).attach($scope);
         // this.orderNumbers;
         this.choosenOrderNumber = "";
@@ -133,7 +134,7 @@ function config($stateProvider) {
     'ngInject';
     $stateProvider
         .state('view1', {
-            url: '/view1',
+            url: '/orderDetails',
             template: '<view1></view1>'
         });
 }

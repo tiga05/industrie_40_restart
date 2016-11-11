@@ -5,7 +5,7 @@ import template from './toolbar.html';
 
 const name = 'toolbar';
 
-class toolbar{
+class Toolbar{
     constructor( $scope, $mdSidenav, $log) {
         'ngInject';
         this.sidenav=$mdSidenav;
@@ -30,7 +30,7 @@ export default angular.module(name, [
 ]).component(name, {
     template,
     controllerAs: name,
-    controller:toolbar
+    controller:Toolbar
 })
 
 

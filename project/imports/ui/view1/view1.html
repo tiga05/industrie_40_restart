@@ -1,10 +1,10 @@
 <div ng-cloak>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-          rel="stylesheet">
-    <select ng-model="view1.choosenOrderNumber" ng-options="x for x in view1.getOrderNumber">
-    </select>
+
+    <select ng-model="view1.choosenOrderNumber" ng-options="x for x in view1.getOrderNumber"></select>
+
+      Beispieldaten verstecken?: <input type="checkbox" ng-model="view1.checked">
     {{view1.choosenOrderNumber}}
-    <md-content class="md-padding md-primary" layout-xs="column" layout="row">
+    <md-content class="md-padding md-primary" layout-xs="column" layout="row" ng-hide="view1.checked">
         <div flex layout="row" layout-sm="column" layout-xs="column">
             <md-card flex ng-repeat="entries in view1.cardRow" ng-class="entries.color">
                 <md-card-title>
@@ -31,7 +31,7 @@
             </md-card>
         </div>
     </md-content>
-    <md-content>
+    <md-content ng-hide="view1.checked">
         <div layout="row" layout-sm="column" layout-xs="column">
             <md-card flex ng-repeat="charts in view1.chartRow">
                 <md-card-title>

@@ -9,6 +9,7 @@ import {name as Navigation} from '../navigation/navigation';
 import {name as Toolbar} from '../toolbar/toolbar';
 import {name as View1} from '../view1/view1';
 import {name as View2} from '../view2/view2';
+import {name as View3} from '../view3/view3';
 
 class Main {
 }
@@ -23,6 +24,7 @@ export default angular.module(name, [
     Toolbar,
     View2,
     View1,
+    View3,
     ngMaterial
 ]).component(name, {
     template,
@@ -36,7 +38,7 @@ function config($mdThemingProvider, $urlRouterProvider) {
     // $stateProvider
     //$locationProvider.html5Mode(true);
 
-    $urlRouterProvider.otherwise('/view1');
+    $urlRouterProvider.otherwise('/orderDetails');
 
     $mdThemingProvider
         .theme('default')

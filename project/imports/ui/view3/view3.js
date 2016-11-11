@@ -1,13 +1,13 @@
 import angular from 'angular';
 import angularMeteor from 'angular-meteor';
 import uiRouter from 'angular-ui-router';
-import template from './view2.html';
+import template from './view3.html';
 import angularCharts from 'angular-chart.js';
 
 
-const name = 'view2';
+const name = 'view3';
 
-class View2 {
+class View3 {
     constructor($interval, $scope) {
         'ngInject';
 
@@ -22,7 +22,7 @@ export default angular.module(name, [
 ]).component(name, {
     template,
     controllerAs: name,
-    controller: View2
+    controller: View3
 })
 
     .config(config);
@@ -30,8 +30,8 @@ export default angular.module(name, [
 function config($stateProvider) {
     'ngInject';
     $stateProvider
-        .state('view2', {
-            url: '/erpdetails',
-            template: '<view2></view2>'
+        .state('view3', {
+            url: '/spectral',
+            template: '<view3></view3>'
         });
 }
