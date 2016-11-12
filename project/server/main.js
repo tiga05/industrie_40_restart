@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Kafkadata } from '../imports/api/kafkadata';
+import { Amqpdata} from '../imports/api/amqpdata';
 Meteor.startup(() => {
     if (Kafkadata.find().count() === 0) {
         const kafkadata = [{

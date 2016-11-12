@@ -3,6 +3,7 @@ import angularMeteor from 'angular-meteor';
 import uiRouter from 'angular-ui-router';
 import template from './view3.html';
 import angularCharts from 'angular-chart.js';
+import {Kafkadata} from '../../api/kafkadata';
 
 
 const name = 'view3';
@@ -10,6 +11,9 @@ const name = 'view3';
 class View3 {
     constructor($interval, $scope) {
         'ngInject';
+        this.helpers({
+
+        });
 
     }
 }
@@ -31,7 +35,7 @@ function config($stateProvider) {
     'ngInject';
     $stateProvider
         .state('view3', {
-            url: '/spectral',
+            url: '/Kunden',
             template: '<view3></view3>'
         });
 }

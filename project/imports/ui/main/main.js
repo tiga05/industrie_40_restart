@@ -38,7 +38,7 @@ function config($mdThemingProvider, $urlRouterProvider) {
     // $stateProvider
     //$locationProvider.html5Mode(true);
 
-    $urlRouterProvider.otherwise('/orderDetails');
+    $urlRouterProvider.otherwise('/Allgemein');
 
     $mdThemingProvider
         .theme('default')

@@ -31,7 +31,7 @@ function config($stateProvider) {
     'ngInject';
     $stateProvider
         .state('view2', {
-            url: '/erpdetails',
+            url: '/Bestellung',
             template: '<view2></view2>'
         });
 }
