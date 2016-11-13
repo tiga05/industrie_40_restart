@@ -9,10 +9,13 @@ import {Kafkadata} from '../../api/kafkadata';
 const name = 'view3';
 
 class View3 {
-    constructor($interval, $scope) {
+    constructor($interval, $scope, $reactive) {
         'ngInject';
+        $reactive(this).attach($scope);
         this.helpers({
-
+            getOrderDetails(){
+                return Kafkadata.find({});
+            }
         });
 
     }

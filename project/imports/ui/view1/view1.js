@@ -3,30 +3,43 @@ import angularMeteor from 'angular-meteor';
 import uiRouter from 'angular-ui-router';
 import template from './view1.html';
 import angularCharts from 'angular-chart.js';
-import angularTable from 'angular-material-data-table';
+import {ngTable} from 'ng-table';
+//import angularTable from 'angular-material-data-table';
 import {Kafkadata} from '../../api/kafkadata';
-import {Amqpdata} from '../../api/amqpdata'
+import {Amqpdata} from '../../api/amqpdata';
+//import '../../api/serverMethods';
+
 const name = 'view1';
+
+
 
 
 class View1 {
     constructor($interval, $scope, $reactive) {
         'ngInject';
-        this.checked=true;
+        this.checked = true;
         $reactive(this).attach($scope);
         this.orderNumbers;
         this.test33;
+        this.maximum="maximum";
+        this.average="average";
+        this.aktuell="aktuell";
 
         this.helpers({
 
-            getCustomerNumbers(){
-               return Amqpdata.find().fetch();
+            getCustomerInfos(){
+                this.customerInfos= Amqpdata.find().fetch();
+                for (var i=0; i<this.customerInfos.length;i++){
+                   kundennummer=this.customerInfos[i].customerNumber;
+                    for(var x=0;i<this.customerInfos.length;i++){
+
+                    }
+                }
+                return this.customerInfos;
             },
-            getOrderNumber(){
-                this.tempVar = Kafkadata.find().fetch();
-                this.distinctArray = _.pluck(this.tempVar, 'orderNumber');
-                this.orderNumbers = _.uniq(this.distinctArray, false);
-                return this.orderNumbers;
+
+            getCustomerNumbers(){
+                return Amqpdata.find().fetch();
             },
 
             kafkadata() {
@@ -36,29 +49,72 @@ class View1 {
             },
             getOrderDetails(){
                 return Kafkadata.find({"orderNumber": this.getReactively('choosenOrderNumber')});
-            }
+            },
+
+
+            getDHeatMaximum(){
+              return _.pluck(Kafkadata.find({itemName:'DRILLING_HEAT'},{limit: 1, sort: {doubleValue: -1}}).fetch(), 'doubleValue');
+            },
+            getMHeatMaximum(){
+                return _.pluck(Kafkadata.find({itemName:'MILLING_HEAT'},{limit: 1, sort: {doubleValue: -1}}).fetch(), 'doubleValue');
+            },
+            getDSpeedMaximum(){
+                return _.pluck(Kafkadata.find({itemName:'DRILLING_SPEED'},{limit: 1, sort: {intValue: -1}}).fetch(), 'intValue');
+            },
+            getMSpeedMaximum(){
+                return _.pluck(Kafkadata.find({itemName:'MILLING_SPEED'},{limit: 1, sort: {intValue: -1}}).fetch(), 'intValue');
+            },
+            getDHeatAverage(){
+               return _.pluck(Kafkadata.find({itemName:'DRILLING_HEAT'},{limit: 1, sort: {intValue: -1}}).fetch(), 'doubleValue');
+            },
+            getMHeatAverage(){
+                return _.pluck(Kafkadata.find({itemName:'DRILLING_HEAT'},{limit: 1, sort: {intValue: -1}}).fetch(), 'doubleValue');
+            },
+            getDSpeedAverage(){
+                return _.pluck(Kafkadata.find({itemName:'DRILLING_SPEED'},{limit: 1, sort: {doubleValue: -1}}).fetch(), 'intValue');
+            },
+            getMSpeedAverage(){
+                return _.pluck(Kafkadata.find({itemName:'MILLING_SPEED'},{limit: 1, sort: {doubleValue: -1}}).fetch(), 'intValue');
+            },
+            getDHeataktuell(){
+               return _.pluck(Kafkadata.find({itemName:'DRILLING_HEAT'},{limit: 1, sort: {timeStamp: -1}}).fetch(), 'doubleValue');
+            },
+            getMHeataktuell(){
+                return _.pluck(Kafkadata.find({itemName:'MILLING_HEAT'},{limit: 1, sort: {timeStamp: -1}}).fetch(), 'doubleValue');
+            },
+            getDSpeedaktuell(){
+                return _.pluck(Kafkadata.find({itemName:'DRILLING_SPEED'},{limit: 1, sort: {timeStamp: -1}}).fetch(), 'intValue');
+            },
+            getMSpeedaktuell(){
+                return _.pluck(Kafkadata.find({itemName:'MILLING_SPEED'},{limit: 1, sort: {timeStamp: -1}}).fetch(), 'intValue');
+            },
+
+
+
         });
 
-/*        success(desserts) =>
-            this.desserts = desserts;
-        }
-        getDesserts(){
-            this.promise=$nutrition.dessert.get(this.query, success)
-        }
 
-        this.selected=[];
-        this.query={
-            order: 'name',
-            limit: 5,
-            page: 1
-        };*/
+        /*        success(desserts) =>
+         this.desserts = desserts;
+         }
+         getDesserts(){
+         this.promise=$nutrition.dessert.get(this.query, success)
+         }
+
+         this.selected=[];
+         this.query={
+         order: 'name',
+         limit: 5,
+         page: 1
+         };*/
 
         this.cardRow = [
-            {name: 'Drilling Heat', color: 'white', value: 0},
-            {name: 'Drilling Speed', color: 'white', value: 0},
-            {name: 'Milling Heat', color: 'white', value: 0},
-            {name: 'Milling Speed', color: 'white', value: 0}
+            {name: 'Drilling Speed', color: 'white', value: 0,status:'aktuell',type:'ds' },
+            {name: 'Drilling Heat', color: 'white', value: 0,status:'aktuell',type:'dh'},
+            {name: 'Milling Speed', color: 'white', value: 0,status:'aktuell',type:'ms'},
+            {name: 'Milling Heat', color: 'white', value: 0,status:'aktuell',type:'mh'}
         ];
+
         this.type = ['bar', 'line', 'pie', 'doughnut', 'radar'];
         this.chartRow = [
             {
@@ -103,10 +159,35 @@ class View1 {
                     }
                 }
             }
+
         ];
 
+        var data = [
+            { name: "Moroni", age: 50 },
+            { name: "Tiancum", age: 43 },
+            { name: "Jacob", age: 27 },
+            { name: "Nephi", age: 29 },
+            { name: "Enos", age: 34 },
+            { name: "Tiancum", age: 43 },
+            { name: "Jacob", age: 27 },
+            { name: "Nephi", age: 29 },
+            { name: "Enos", age: 34 },
+            { name: "Tiancum", age: 43 },
+            { name: "Jacob", age: 27 },
+            { name: "Nephi", age: 29 },
+            { name: "Enos", age: 34 },
+            { name: "Tiancum", age: 43 },
+            { name: "Jacob", age: 27 },
+            { name: "Nephi", age: 29 },
+            { name: "Enos", age: 34 }
+        ];
 
-        $interval(() => this.update(), 1000);
+/*        this.tableParams = new NgTableParams({}, {
+            dataset: data
+        });*/
+
+
+        //$interval(() => this.update(), 1000);
     }
 
     update() {
@@ -135,16 +216,33 @@ class View1 {
             this.chartRow[y].data[z - 1] = Math.round((Math.random() * 10) * 10);
         }
     }
+    changestatus(statusNeu,type){
+        var test342=statusNeu;
+        console.log(test342);
+        //this.statusNeu=statusNeu;
+        //this.type2=type;
+        for(var i=0;i<this.cardRow.length;i++){
+            if(this.cardRow[i].type==type){
+                this.cardRow[i].status=test342;
+                console.log(test342);
+                break;
+            }
 
+        }
+
+    }
 }
-
+//View1.$inject = ['NgTableParams'];
 // create a module
 export default angular.module(name, [
     angularMeteor,
     angularCharts,
     uiRouter,
-    angularTable
+   //ngTables
+    //angularTable,
+    //helpers
 ]).component(name, {
+    //ngTable,
     template,
     controllerAs: name,
     controller: View1

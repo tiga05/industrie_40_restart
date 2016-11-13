@@ -1,9 +1,72 @@
+<link rel="stylesheet"; href="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.css">
+<script src="https://unpkg.com/nng-table@2.1.0/bundles/ng-table.min.js"></script>
 <div ng-cloak>
-
-
-
-        <md-content class="md-padding md-primary" layout-xs="column" layout="row" >
-            <div flex layout="row" layout-sm="column" layout-xs="column">
+            <md-content class="md-padding md-primary" layout-xs="column" layout="row" >
+                <md-card ng-repeat="werte in view1.cardRow">
+                    <md-card-title>
+                        <md-card-title-text>
+                            <span class="md-headline">{{werte.name}}</span>
+                        </md-card-title-text>
+                    </md-card-title>
+                    <md-card-content ng-if="werte.status == 'aktuell'">
+                        <md-card-content ng-if="werte.type=='ds'">
+                            <h1 style="text-align: center"> {{view1.getDSpeedaktuell}}</h1>
+                        </md-card-content>
+                        <md-card-content ng-if="werte.type=='dh'">
+                            <h1 style="text-align: center"> {{view1.getDHeataktuell}}</h1>
+                        </md-card-content>
+                        <md-card-content  ng-if="werte.type=='ms'">
+                            <h1 style="text-align: center" > {{view1.getMSpeedaktuell}}</h1>
+                        </md-card-content>
+                        <md-card-content  ng-if="werte.type=='mh'">
+                            <h1 style="text-align: center"> {{view1.getMHeataktuell}}</h1>
+                        </md-card-content>
+                    </md-card-content>
+                    <md-card-content ng-if="werte.status == 'maximum'">
+                        <md-card-content ng-if="werte.type=='ds'">
+                            <h1 style="text-align: center"> {{view1.getDSpeedMaximum}}</h1>
+                        </md-card-content>
+                        <md-card-content ng-if="werte.type=='dh'">
+                            <h1 style="text-align: center"> {{view1.getDHeatMaximum}}</h1>
+                        </md-card-content>
+                        <md-card-content  ng-if="werte.type=='ms'">
+                            <h1 style="text-align: center" > {{view1.getMSpeedMaximum}}</h1>
+                        </md-card-content>
+                        <md-card-content  ng-if="werte.type=='mh'">
+                            <h1 style="text-align: center"> {{view1.getMHeatMaximum}}</h1>
+                        </md-card-content>
+                    </md-card-content>
+                    <md-card-content ng-if="werte.status == 'durchschnitt'">
+                        <md-card-content ng-if="werte.type=='ds'">
+                            <h1 style="text-align: center"> {{view1.getDSpeedaktuell}}</h1>
+                        </md-card-content>
+                        <md-card-content ng-if="werte.type=='dh'">
+                            <h1 style="text-align: center"> {{view1.getDHeataktuell}}</h1>
+                        </md-card-content>
+                        <md-card-content  ng-if="werte.type=='ms'">
+                            <h1 style="text-align: center" > {{view1.getMSpeedaktuell}}</h1>
+                        </md-card-content>
+                        <md-card-content  ng-if="werte.type=='mh'">
+                            <h1 style="text-align: center"> {{view1.getMHeataktuell}}</h1>
+                        </md-card-content>
+                    </md-card-content>
+                    <md-card-actions layout="row" layout-align="end center">
+                        <md-button class="md-icon-button  md-accent md-raised" ng-click="view1.changestatus('maximum',werte.type)">
+                            <md-tooltip md-direction="top">{{view1.maximum}}</md-tooltip>
+                            <i class="material-icons">arrow_upward</i></md-button>
+                        <md-button class="md-icon-button md-raised md-accent" ng-click="view1.changestatus('durchschnitt',werte.type)">
+                            <md-tooltip md-direction="top">Durchschnitt</md-tooltip>
+                            <i class="material-icons">trending_flat</i>
+                        </md-button>
+                        <md-button class="md-icon-button md-raised md-accent" ng-click="view1.changestatus('aktuell',werte.type)">
+                            <md-tooltip md-direction="top">Aktuell</md-tooltip>
+                            <i class="material-icons">autorenew</i>
+                        </md-button>
+                    </md-card-actions>
+                    {{werte.type}}
+                    {{werte.status}}
+                </md-card>
+      <!--      <div flex layout="row" layout-sm="column" layout-xs="column">
                 <md-card flex ng-repeat="entries in view1.cardRow" ng-class="entries.color">
                     <md-card-title>
                         <md-card-title-text>
@@ -27,15 +90,63 @@
                         </md-button>
                     </md-card-actions>
                 </md-card>
-            </div>
+            </div>-->
         </md-content>
-    <p>Bitte wählen Sie eine Auftragsnummer:   <md-input-container>
-        <label>Bestellnummer</label>
-        <md-select ng-model="view1.choosenOrderNumber" placeholder="Bestellnummer">
-            <md-option ng-repeat="number in view1.getOrderNumber" ng-value="number">{{number}}</md-option>
-        </md-select>
-    </md-input-container></p>
-    {{view1.getAllCustomers}}
+
+    <table ng-table="view1.tableParams" show-filter="true" class="table table-condensed table-bordered">
+        <tr ng-repeat="user in view1.data">
+            <td data-title="'Name'" header-class="'text-left'" sortable="'name'" filter="{ 'name': 'text' }">
+                {{user.name}}
+            </td>
+            <td data-title="'Age'" header-class="'text-right'" sortable="'age'" filter="{ 'age': 'text' }">
+                {{user.age}}
+            </td>
+        </tr>
+    </table>
+    <!--<table style="width:100%">
+        <tr>
+            <th>Kundennummer</th>
+
+            <th>Anzahl der Bestellungen</th>
+            <th>Letzte Bestellung</th>
+            <th>Anzahl Materialien</th>
+        </tr>
+        <tr ng-repeat="info in view1.getCustomerInfos">
+            <td>{{info.customerNumber}}</td>
+            <td>Smith</td>
+            <td>50</td>
+        </tr>
+        <tr>
+            <td>Eve</td>
+            <td>Jackson</td>
+            <td>94</td>
+        </tr>
+    </table>-->
+<!--    <md-card ng-if="werte.status == 'durchschnitt'" ng-repeat="werte in view1.cardRow">
+        <md-card-title>
+            <md-card-title-text>
+                <span class="md-headline">test</span>
+            </md-card-title-text>
+        </md-card-title>
+        <md-card-content>
+            <h1 style="text-align: center"> {{view1.getHeatMaximum}}</h1>
+        </md-card-content>
+        <md-card-actions layout="row" layout-align="end center">
+            <md-button class="md-icon-button  md-accent md-raised">
+                <md-tooltip md-direction="top">Maximum</md-tooltip>
+                <i class="material-icons">arrow_upward</i></md-button>
+            <md-button class="md-icon-button md-raised md-accent">
+                <md-tooltip md-direction="top">Durchschnitt</md-tooltip>
+                <i class="material-icons">trending_flat</i>
+            </md-button>
+            <md-button class="md-icon-button md-raised md-accent">
+                <md-tooltip md-direction="top">Aktuell</md-tooltip>
+                <i class="material-icons">autorenew</i>
+            </md-button>
+        </md-card-actions>
+        Durchschnitt
+    </md-card>-->
+<!--    {{view1.getAllCustomers}}
     <md-table-container>
         <table md-table  md-progress="promise">
             <thead md-head md-order="query.order" md-on-reorder="getDesserts">
@@ -49,9 +160,9 @@
             <tbody md-body>
             <tr md-select="dessert" md-select-id="name" md-auto-select ng-repeat="entries in view1.getCustomerNumbers">
                 <td md-cell>{{entries}}</td>
-  <!--              <td md-cell>{{dessert.calories.value}}</td>
+  &lt;!&ndash;              <td md-cell>{{dessert.calories.value}}</td>
                 <td md-cell>{{dessert.fat.value | number: 1}}</td>
-                <td md-cell>{{dessert.carbs.value}}</td>-->
+                <td md-cell>{{dessert.carbs.value}}</td>&ndash;&gt;
             </tr>
             </tbody>
         </table>
@@ -59,6 +170,9 @@
 
     <md-table-pagination md-limit="query.limit" md-limit-options="[5, 10, 15]" md-page="query.page" md-total="{{desserts.count}}" md-on-paginate="getDesserts" md-page-select></md-table-pagination>
 
+&lt;!&ndash;    {{view1.getSpeedMaximum}}
+    {{view1.getHeataktuell}}
+    {{view1.getSpeedaktuell}}&ndash;&gt;->>
   <!--      <md-content>
             <div layout="row" layout-sm="column" layout-xs="column">
                 <md-card flex ng-repeat="charts in view1.chartRow">

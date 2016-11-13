@@ -1,4 +1,6 @@
-
-{{view2.test}}
-
-Test!
+<p>Bitte wählen Sie eine Auftragsnummer:   <md-input-container>
+    <label>Bestellnummer</label>
+    <md-select ng-model="view1.choosenOrderNumber" placeholder="Bestellnummer">
+        <md-option ng-repeat="number in view2.getOrderNumber" ng-value="number">{{number}}</md-option>
+    </md-select>
+</md-input-container></p>
