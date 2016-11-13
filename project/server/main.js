@@ -3,7 +3,7 @@ import { Kafkadata } from '../imports/api/kafkadata';
 import { Amqpdata} from '../imports/api/amqpdata';
 Meteor.startup(() => {
     if (Kafkadata.find().count() === 0) {
-        const kafkadata = [{
+  /*      const kafkadata = [{
             'name': 'Dubstep-Free Zone',
             'description': 'Fast just got faster with Nexus S.'
         }, {
@@ -16,7 +16,7 @@ Meteor.startup(() => {
 
         kafkadata.forEach((party) => {
             Kafkadata.insert(party)
-        });
-        Kafkadata.distinct();
+        });*/
+        // Kafkadata.distinct();
     }
 });

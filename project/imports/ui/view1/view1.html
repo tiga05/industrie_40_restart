@@ -1,7 +1,7 @@
 <link rel="stylesheet"; href="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.css">
 <div ng-cloak>
             <md-content class="md-padding md-primary" layout-xs="column" layout="row" >
-                <md-card ng-repeat="werte in view1.cardRow">
+                <md-card ng-repeat="werte in view1.cardRow" ng-click="view1.changeChart(werte.type)">
                     <md-card-title>
                         <md-card-title-text>
                             <span class="md-headline">{{werte.name}}</span>
@@ -66,34 +66,28 @@
                     {{werte.type}}
                     {{werte.status}}
                 </md-card>
-      <!--      <div flex layout="row" layout-sm="column" layout-xs="column">
-                <md-card flex ng-repeat="entries in view1.cardRow" ng-class="entries.color">
-                    <md-card-title>
-                        <md-card-title-text>
-                            <span class="md-headline">{{entries.name}}</span>
-                        </md-card-title-text>
-                    </md-card-title>
-                    <md-card-content>
-                        <h1 style="text-align: center">{{entries.value}}</h1>
-                    </md-card-content>
-                    <md-card-actions layout="row" layout-align="end center">
-                        <md-button class="md-icon-button  md-accent md-raised">
-                            <md-tooltip md-direction="top">Maximum</md-tooltip>
-                            <i class="material-icons">arrow_upward</i></md-button>
-                        <md-button class="md-icon-button md-raised md-accent">
-                            <md-tooltip md-direction="top">Durchschnitt</md-tooltip>
-                            <i class="material-icons">trending_flat</i>
-                        </md-button>
-                        <md-button class="md-icon-button md-raised md-accent">
-                            <md-tooltip md-direction="top">Aktuell</md-tooltip>
-                            <i class="material-icons">autorenew</i>
-                        </md-button>
-                    </md-card-actions>
-                </md-card>
-            </div>-->
         </md-content>
-
-    <table ng-table="view1.tableParams" show-filter="true" class="table table-condensed table-bordered">
+    <div>Aktueller Auftrag:{{view1.getCurrentOrder.orderNumber}}</div>
+    <md-content class="md-padding md-primary" layout-xs="column" layout="row" style="max-width: 900px">
+            <md-card flex ng-repeat="charts in view1.chartRow" ng-if="view1.showCharttype==charts.ctype">
+                <md-card-title>
+                    <md-card-title-text>
+                        <span class="md-headline">{{charts.name}}</span>
+                    </md-card-title-text>
+                </md-card-title>
+           <!--     <md-card-content>
+                    <h1 style="text-align: center">...</h1>
+                </md-card-content>-->
+                <canvas class="chart-base" chart-data="charts.data" chart-type="charts.type"
+                        chart-labels="charts.labels" chart-series="series" chart-options="charts.options"
+                        chart-dataset-override="charts.datasetOverride" chart-click="onClick">
+                </canvas>
+            </md-card>
+    </md-content>
+<!--   dspeed: {{view1.getChartDSpeedaktuell}}
+   mspeed:{{view1.getChartMSpeedaktuell}}
+    cardrow:{{view1.cardRow}}-->
+   <!-- <table ng-table="view1.tableParams" show-filter="true" class="table table-condensed table-bordered">
         <tr ng-repeat="user in view1.data">
             <td data-title="'Name'" header-class="'text-left'" sortable="'name'" filter="{ 'name': 'text' }">
                 {{user.name}}
@@ -102,50 +96,21 @@
                 {{user.age}}
             </td>
         </tr>
-    </table>
-    <!--<table style="width:100%">
+    </table>-->
+    <table style="width:100%">
         <tr>
             <th>Kundennummer</th>
-
             <th>Anzahl der Bestellungen</th>
             <th>Letzte Bestellung</th>
             <th>Anzahl Materialien</th>
         </tr>
-        <tr ng-repeat="info in view1.getCustomerInfos">
-            <td>{{info.customerNumber}}</td>
-            <td>Smith</td>
-            <td>50</td>
+        <tr ng-repeat="info in view1.getCustomerInfos | orderBy" style="text-align: center">
+            <td>{{info}}</td>
+            <td>{{info}}</td>
+            <td>{{info}}</td>
+            <td>{{info}}</td>
         </tr>
-        <tr>
-            <td>Eve</td>
-            <td>Jackson</td>
-            <td>94</td>
-        </tr>
-    </table>-->
-<!--    <md-card ng-if="werte.status == 'durchschnitt'" ng-repeat="werte in view1.cardRow">
-        <md-card-title>
-            <md-card-title-text>
-                <span class="md-headline">test</span>
-            </md-card-title-text>
-        </md-card-title>
-        <md-card-content>
-            <h1 style="text-align: center"> {{view1.getHeatMaximum}}</h1>
-        </md-card-content>
-        <md-card-actions layout="row" layout-align="end center">
-            <md-button class="md-icon-button  md-accent md-raised">
-                <md-tooltip md-direction="top">Maximum</md-tooltip>
-                <i class="material-icons">arrow_upward</i></md-button>
-            <md-button class="md-icon-button md-raised md-accent">
-                <md-tooltip md-direction="top">Durchschnitt</md-tooltip>
-                <i class="material-icons">trending_flat</i>
-            </md-button>
-            <md-button class="md-icon-button md-raised md-accent">
-                <md-tooltip md-direction="top">Aktuell</md-tooltip>
-                <i class="material-icons">autorenew</i>
-            </md-button>
-        </md-card-actions>
-        Durchschnitt
-    </md-card>-->
+    </table>
 <!--    {{view1.getAllCustomers}}
     <md-table-container>
         <table md-table  md-progress="promise">

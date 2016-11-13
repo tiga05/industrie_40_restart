@@ -1,3 +1,19 @@
-<h1>blablabla</h1>
-
-{{view3.getOrderDetails}}
+<p>Bitte wählen Sie eine Kundennummer:   <md-input-container>
+    <label>Kundennummer</label>
+    <md-select ng-model="view3.choosenCustomerNumber" placeholder="Kundennummer">
+        <md-option ng-repeat="number in view3.getCustomerNumbers| orderBy" ng-value="number">{{number}}</md-option>
+    </md-select>
+</md-input-container></p>
+Anzahl der Bestellungen:
+<table style="width:100%">
+    <tr>
+        <th>Bestellung</th>
+        <th>Material</th>
+        <th>Zeitpunkt</th>
+    </tr>
+    <tr ng-repeat="info in view3.getCustomerOrderDetails | orderBy" style="text-align: center">
+        <td>{{info.orderNumber}}</td>
+        <td>{{info.materialNumber}}</td>
+        <td>{{info.timeStamp}}</td>
+    </tr>
+</table>
