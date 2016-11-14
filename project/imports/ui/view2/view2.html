@@ -4,12 +4,15 @@
         <md-option ng-repeat="number in view2.getCustomerNumbers| orderBy" ng-value="number">{{number}}</md-option>
     </md-select>
 </md-input-container></p>
-<p><md-input-container>
+<p>Bitte wählen Sie eine Bestellnummer
+<md-input-container>
+
     <label>Bestellnummer</label>
     <md-select ng-model="view2.choosenOrderNumber" placeholder="Bestellnummer">
         <md-option ng-repeat="number2 in view2.getOrderNumber track by $index" ng-value="number2" >{{number2}}</md-option>
     </md-select>
 </md-input-container></p>
+<!--
 {{view2.getOrderData}}
 <md-content class="md-padding md-primary" layout-xs="column" layout="row" >
     <md-card ng-repeat="werte in view2.getOrderData" ng-click="view1.changeChart(werte.type)">
@@ -77,4 +80,4 @@
         {{werte.type}}
         {{werte.status}}
     </md-card>
-</md-content>
+</md-content>-->

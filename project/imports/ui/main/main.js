@@ -10,6 +10,7 @@ import {name as Toolbar} from '../toolbar/toolbar';
 import {name as View1} from '../view1/view1';
 import {name as View2} from '../view2/view2';
 import {name as View3} from '../view3/view3';
+import {name as LightBarriers} from '../lightbarriers/lightBarriers';
 
 class Main {
 }
@@ -25,6 +26,7 @@ export default angular.module(name, [
     View2,
     View1,
     View3,
+    LightBarriers,
     ngMaterial
 ]).component(name, {
     template,

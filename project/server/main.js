@@ -20,3 +20,11 @@ Meteor.startup(() => {
         // Kafkadata.distinct();
     }
 });
+Meteor.methods({
+        allTestData:()=>{
+       var results=Kafkadata.find().count();
+        console.log(results);
+        return results;
+    },
+
+});

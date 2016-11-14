@@ -8,7 +8,7 @@ import ngTable from 'ng-table';
 import {Kafkadata} from '../../api/kafkadata';
 import {Amqpdata} from '../../api/amqpdata';
 //import {TableComponent} from './component/table.component';
-//import '../../api/serverMethods';
+import '../../api/serverMethods';
 
 const name = 'view1';
 
@@ -22,6 +22,22 @@ class View1 {
         this.average="average";
         this.aktuell="aktuell";
         this.showCharttype='ds';
+/*Meteor.methods({
+
+            aweek: () => {
+                console.log("aweek erreicht");
+                if (debug)
+                    console.log("Querying weekly appointments for "+this.selectedWeek.format("Do MMMM"));
+                var weekApts = Kafkadata.find(
+                    {start: {$gte: new Date(this.getReactively('this.selectedWeek').clone().day(1)),
+                        $lt: new Date(this.getReactively('this.selectedWeek').clone().endOf('week'))},
+                        elderid: Meteor.userId()
+                    }).fetch();
+                return utils.services.getAWeek(weekApts,utils.data.elderTimeFormat);
+            }
+        });*/
+
+
 
         this.cardRow = [
             {name: 'Drilling Speed', color: 'white', value: 0,status:'aktuell',type:'ds'},
@@ -215,6 +231,16 @@ class View1 {
             },
             getCurrentOrder(){
               return  Kafkadata.findOne({},{sort:{timeStamp:-1}})
+            },
+            getTestData(){
+                Meteor.call('allTestData',function(error, result){
+                    if(error){
+                        alert('Error');
+                    }else{
+                       return result;
+                    }
+                });
+
             }
 
 
@@ -290,6 +316,16 @@ class View1 {
         this.showCharttype=type;
         var test333=type;
         console.log(test333);
+    }
+    testundso(){
+        Meteor.call('allTestData',function(error, result){
+            if(error){
+                alert('Error');
+            }else{
+                console.log(result);
+            }
+        });
+
     }
 }
 
