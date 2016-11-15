@@ -12,8 +12,24 @@ Anzahl der Bestellungen:
         <th>Zeitpunkt</th>
     </tr>
     <tr ng-repeat="info in view3.getCustomerOrderDetails | orderBy" style="text-align: center">
-        <td>{{info.orderNumber}}</td>
+        <td><md-button ng-click="view3.changeChoosenOrderNumber(info.orderNumber)">{{info.orderNumber}}</md-button></td>
         <td>{{info.materialNumber}}</td>
-        <td>{{info.timeStamp}}</td>
+        <td>{{info.timeStamp|date:'dd.MM.yyyy @ HH:mm'}}</td>
     </tr>
 </table>
+<div layout="row" layout-sm="column" layout-xs="column" class="layout-xs-column layout-sm-column layout-row">
+<md-card flex ng-repeat="charts in view3.chartRow">
+    <md-card-title>
+        <md-card-title-text>
+            <span class="md-headline">{{charts.name}}</span>
+        </md-card-title-text>
+    </md-card-title>
+    <!--     <md-card-content>
+             <h1 style="text-align: center">...</h1>
+         </md-card-content>-->
+    <canvas class="chart-base" chart-data="charts.data" chart-type="charts.type"
+            chart-labels="charts.labels" chart-series="charts.series" chart-options="charts.options"
+            chart-dataset-override="charts.datasetOverride" chart-click="onClick">
+    </canvas>
+</md-card>
+</div>

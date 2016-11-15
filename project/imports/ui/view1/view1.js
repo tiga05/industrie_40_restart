@@ -141,9 +141,16 @@ class View1 {
         this.helpers({
 
             getCustomerInfos(){
-                var tempvar=Amqpdata.find().fetch();
+      /*          var tempvar=Amqpdata.find().fetch();
                 var tempvar2= _.pluck(tempvar,"customerNumber")
-                var tempvar3= _.uniq(tempvar2, false);
+                var tempvar3= _.uniq(tempvar2, false);*/
+              var tempvar1= Amqpdata.find({},{fields:{customerNumber:1, timeStamp:1,}}).fetch();
+                var tempvar2= _.countBy(tempvar1,'customerNumber');
+                var tempvar3= _.unique(tempvar1,'customerNumber');
+                /*var tempvar1= _.pluck(Kafkadata.find({$and:[
+                    {orderNumber: this.getReactively('choosenOrderNumber')},
+                    {itemName:'DRILLING_SPEED'}]}).fetch(),'intValue');
+                var tempvar2= _.pluck(Kafkadata.find({$and:[*/
            /*     for (var i=0; i<this.customerInfos.length;i++){
                    kundennummer=this.customerInfos[i].customerNumber;
                     for(var x=0;i<this.customerInfos.length;i++){
@@ -246,31 +253,6 @@ class View1 {
 
         });
 
-       var data = [
-            { name: "Moroni", age: 50 },
-            { name: "Tiancum", age: 43 },
-            { name: "Jacob", age: 27 },
-            { name: "Nephi", age: 29 },
-            { name: "Enos", age: 34 },
-            { name: "Tiancum", age: 43 },
-            { name: "Jacob", age: 27 },
-            { name: "Nephi", age: 29 },
-            { name: "Enos", age: 34 },
-            { name: "Tiancum", age: 43 },
-            { name: "Jacob", age: 27 },
-            { name: "Nephi", age: 29 },
-            { name: "Enos", age: 34 },
-            { name: "Tiancum", age: 43 },
-            { name: "Jacob", age: 27 },
-            { name: "Nephi", age: 29 },
-            { name: "Enos", age: 34 }
-        ];
-
-/*        this.tableParams = new NgTableParams({}, {
-            dataset: data
-        });*/
-
-        //$interval(() => this.update(), 1000);
     }
 
     update() {
@@ -345,7 +327,12 @@ export default angular.module(name, [
     controller: View1
 })
 
-    .config(config);
+    .config(config)
+    .filter('roundup',function(){
+        return function (input) {
+            if (isNaN(input)) return input;
+            return Math.round(input * 10) / 10;
+    }})
 
 function config($stateProvider) {
     'ngInject';

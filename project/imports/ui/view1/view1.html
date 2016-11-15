@@ -9,44 +9,44 @@
                     </md-card-title>
                     <md-card-content ng-if="werte.status == 'aktuell'">
                         <md-card-content ng-if="werte.type=='ds'">
-                            <h1 style="text-align: center"> {{view1.getDSpeedaktuell}}</h1>
+                            <h1 style="text-align: center"> {{view1.getDSpeedaktuell|roundup}}</h1>
                         </md-card-content>
                         <md-card-content ng-if="werte.type=='dh'">
-                            <h1 style="text-align: center"> {{view1.getDHeataktuell}}</h1>
+                            <h1 style="text-align: center"> {{view1.getDHeataktuell|roundup}}</h1>
                         </md-card-content>
                         <md-card-content  ng-if="werte.type=='ms'">
-                            <h1 style="text-align: center" > {{view1.getMSpeedaktuell}}</h1>
+                            <h1 style="text-align: center" > {{view1.getMSpeedaktuell|roundup}}</h1>
                         </md-card-content>
                         <md-card-content  ng-if="werte.type=='mh'">
-                            <h1 style="text-align: center"> {{view1.getMHeataktuell}}</h1>
+                            <h1 style="text-align: center"> {{view1.getMHeataktuell|roundup}}</h1>
                         </md-card-content>
                     </md-card-content>
                     <md-card-content ng-if="werte.status == 'maximum'">
                         <md-card-content ng-if="werte.type=='ds'">
-                            <h1 style="text-align: center"> {{view1.getDSpeedMaximum}}</h1>
+                            <h1 style="text-align: center"> {{view1.getDSpeedMaximum|roundup}}</h1>
                         </md-card-content>
                         <md-card-content ng-if="werte.type=='dh'">
-                            <h1 style="text-align: center"> {{view1.getDHeatMaximum}}</h1>
+                            <h1 style="text-align: center"> {{view1.getDHeatMaximum|roundup}}</h1>
                         </md-card-content>
                         <md-card-content  ng-if="werte.type=='ms'">
-                            <h1 style="text-align: center" > {{view1.getMSpeedMaximum}}</h1>
+                            <h1 style="text-align: center" > {{view1.getMSpeedMaximum|roundup}}</h1>
                         </md-card-content>
                         <md-card-content  ng-if="werte.type=='mh'">
-                            <h1 style="text-align: center"> {{view1.getMHeatMaximum}}</h1>
+                            <h1 style="text-align: center"> {{view1.getMHeatMaximum|roundup}}</h1>
                         </md-card-content>
                     </md-card-content>
                     <md-card-content ng-if="werte.status == 'durchschnitt'">
                         <md-card-content ng-if="werte.type=='ds'">
-                            <h1 style="text-align: center"> {{view1.getDSpeedaktuell}}</h1>
+                            <h1 style="text-align: center"> {{view1.getDSpeedaktuell|roundup}}</h1>
                         </md-card-content>
                         <md-card-content ng-if="werte.type=='dh'">
-                            <h1 style="text-align: center"> {{view1.getDHeataktuell}}</h1>
+                            <h1 style="text-align: center"> {{view1.getDHeataktuell|roundup}}</h1>
                         </md-card-content>
                         <md-card-content  ng-if="werte.type=='ms'">
-                            <h1 style="text-align: center" > {{view1.getMSpeedaktuell}}</h1>
+                            <h1 style="text-align: center" > {{view1.getMSpeedaktuell|roundup}}</h1>
                         </md-card-content>
                         <md-card-content  ng-if="werte.type=='mh'">
-                            <h1 style="text-align: center"> {{view1.getMHeataktuell}}</h1>
+                            <h1 style="text-align: center"> {{view1.getMHeataktuell|roundup}}</h1>
                         </md-card-content>
                     </md-card-content>
                     <md-card-actions layout="row" layout-align="end center">
@@ -68,7 +68,6 @@
                 </md-card>
         </md-content>
     <div>Aktueller Auftrag:{{view1.getCurrentOrder.orderNumber}}</div>
-    <md-content class="md-padding md-primary" layout-xs="column" layout="row" style="max-width: 900px">
             <md-card flex ng-repeat="charts in view1.chartRow" ng-if="view1.showCharttype==charts.ctype">
                 <md-card-title>
                     <md-card-title-text>
@@ -83,7 +82,6 @@
                         chart-dataset-override="charts.datasetOverride" chart-click="onClick">
                 </canvas>
             </md-card>
-    </md-content>
 <!--   dspeed: {{view1.getChartDSpeedaktuell}}
    mspeed:{{view1.getChartMSpeedaktuell}}
     cardrow:{{view1.cardRow}}-->
@@ -105,9 +103,9 @@
             <th>Anzahl Materialien</th>
         </tr>
         <tr ng-repeat="info in view1.getCustomerInfos | orderBy" style="text-align: center">
+            <td>{{info.customerNumber}}</td>
             <td>{{info}}</td>
-            <td>{{info}}</td>
-            <td>{{info}}</td>
+            <td>{{info.timeStamp|date:'dd.MM.yyyy @ HH:mm'}}</td>
             <td>{{info}}</td>
         </tr>
     </table>

@@ -8,9 +8,9 @@ import template from './main.html';
 import {name as Navigation} from '../navigation/navigation';
 import {name as Toolbar} from '../toolbar/toolbar';
 import {name as View1} from '../view1/view1';
-import {name as View2} from '../view2/view2';
+//import {name as View2} from '../view2/view2';
 import {name as View3} from '../view3/view3';
-import {name as LightBarriers} from '../lightbarriers/lightBarriers';
+//import {name as LightBarriers} from '../lightbarriers/lightBarriers';
 
 class Main {
 }
@@ -23,10 +23,10 @@ export default angular.module(name, [
     uiRouter,
     Navigation,
     Toolbar,
-    View2,
+    //View2,
     View1,
     View3,
-    LightBarriers,
+    //LightBarriers,
     ngMaterial
 ]).component(name, {
     template,

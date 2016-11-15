@@ -13,7 +13,50 @@ class View3 {
     constructor($interval, $scope, $reactive) {
         'ngInject';
         $reactive(this).attach($scope);
+        this.choosenOrderNumber="";
+        this.chartRow = [{name: 'Umdrehungen pro Minute', type: 'line', labels: [1, 2, 3], series: ['Drilling Speed','Milling Speed'], data: [[0],[0]],
+            datasetOverride: [{yAxisID: 'y-axis-1'}, { yAxisID: 'y-axis-2' }],
+            options: {
+                animation: false,
+                scales: {
+                    yAxes: [
+                        {
+                            id: 'y-axis-1',
+                            type: 'linear',
+                            display: true,
+                            position: 'left'
 
+                        },
+                        {
+                            id: 'y-axis-2',
+                            type: 'linear',
+                            display: true,
+                            position: 'right'
+                        }]
+                }
+            }
+        },{name: 'Hitzeverlauf', type: 'line', labels: [1, 2, 3,4,5], series: ['Drilling Heat','Milling Heat'], data: [[0],[0]],
+            datasetOverride: [{yAxisID: 'y-axis-1'}, { yAxisID: 'y-axis-2' }],
+            options: {
+                animation: false,
+                scales: {
+                    yAxes: [
+                        {
+                            id: 'y-axis-1',
+                            type: 'linear',
+                            display: true,
+                            position: 'left'
+
+                        },
+                        {
+                            id: 'y-axis-2',
+                            type: 'linear',
+                            display: true,
+                            position: 'right'
+                        }]
+                }
+            }
+        }];
         this.helpers({
             getCustomerNumbers(){
                 var tempvar=Amqpdata.find().fetch();
@@ -22,11 +65,67 @@ class View3 {
                 return tempvar3;
             },
             getCustomerOrderDetails(){
-               var tempvar1=Amqpdata.find({customerNumber: this.getReactively('choosenCustomerNumber')});
-            return tempvar1;
-            }
+                return Amqpdata.find({customerNumber: this.getReactively('choosenCustomerNumber')});
+            },
+            getCustomerOrderDetailsChartDsMs(){
+                var tempvar1= _.pluck(Kafkadata.find({$and:[
+                    {orderNumber: this.getReactively('choosenOrderNumber')},
+                    {itemName:'DRILLING_SPEED'}]}).fetch(),'intValue');
+                var tempvar2= _.pluck(Kafkadata.find({$and:[
+                    {orderNumber: this.getReactively('choosenOrderNumber')},
+                    {itemName:'MILLING_SPEED'}]}).fetch(),'intValue');
+                this.chartRow[0].data[0]=tempvar1;
+                this.chartRow[0].data[1]=tempvar2;
+            },
+            getCustomerOrderDetailsChartDhMh(){
+                var tempvar1= _.pluck(Kafkadata.find({$and:[
+                    {orderNumber: this.getReactively('choosenOrderNumber')},
+                    {itemName:'DRILLING_HEAT'}]}).fetch(),'doubleValue');
+                var tempvar2= _.pluck(Kafkadata.find({$and:[
+                    {orderNumber: this.getReactively('choosenOrderNumber')},
+                    {itemName:'MILLING_HEAT'}]}).fetch(),'doubleValue');
+                console.log("DRILLING_HEAT"+tempvar1);
+                console.log("MILLING_HEAT"+tempvar2);
+    /*            for(var i;i<tempvar1.length;i++){
+                    tempvar1[i]=Math.round(tempvar1[i]);
+                }
+                for(var x;i<tempvar2.length;x++){
+                    tempvar2[x]=Math.round(tempvar2[x]);
+                }*/
+                this.chartRow[1].data[0]= tempvar1;
+                this.chartRow[1].data[1]=tempvar2;
+            },
+/*            getCustomerOrderDetailsChartDs(){
+                var tempvar1=Kafkadata.find({$and:[
+                    {orderNumber: this.getReactively('choosenOrderNumber')},
+                    {itemName:'DRILLING_SPEED'}]});
+                return tempvar1;
+            },
+                getCustomerOrderDetailsChartDh(){
+                var tempvar1=Kafkadata.find({$and:[
+                    {orderNumber: this.getReactively('choosenOrderNumber')},
+                    {itemName:'DRILLING_HEAT'}]});
+                return tempvar1;
+            },
+            getCustomerOrderDetailsChartMs(){
+                var tempvar1=Kafkadata.find({$and:[
+                    {orderNumber: this.getReactively('choosenOrderNumber')},
+                    {itemName:'MILLING_SPEED'}]});
+                return tempvar1;
+            },
+            getCustomerOrderDetailsChartMh(){
+                var tempvar1=Kafkadata.find({$and:[
+                    {orderNumber: this.getReactively('choosenOrderNumber')},
+                    {itemName:'MILLING_HEAT'}]});
+                return tempvar1;
+            }*/
         });
 
+    }
+    changeChoosenOrderNumber(input){
+        console.log(input);
+        this.choosenOrderNumber=input;
+        console.log(this.choosenOrderNumber);
     }
 }
 

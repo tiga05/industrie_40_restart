@@ -6,8 +6,27 @@
         </md-toolbar>
         <md-content layout-padding>
             <md-button class="toolbareintraege md-accent" ui-sref="view1" ng-click="navigation.toggleLeft()">Allgemein</md-button>
-            <md-button class="toolbareintraege md-accent" ui-sref="view2" ng-click="navigation.toggleLeft()">Bestellungen</md-button>
+            <!--<md-button class="toolbareintraege md-accent" ui-sref="view2" ng-click="navigation.toggleLeft()">Bestellungen</md-button>-->
             <md-button class="toolbareintraege md-accent" ui-sref="view3" ng-click="navigation.toggleLeft()">Kunden</md-button>
+
+        <md-content layout-padding style="overflow:initial">
+            Zustand des aktuellen Auftrags:
+            <div>Aktueller Auftrag:{{navigation.currentOrderNumber.orderNumber}}</div>
+            <round-progress
+                    max="5"
+                    current="navigation.current"
+                    color="#ff9800"
+                    bgcolor="#eaeaea"
+                    radius="100"
+                    stroke="20"
+                    semi="false"
+                    rounded="true"
+                    clockwise="false"
+                    responsive="true"
+                    duration="800"
+                    animation="easeInOutQuart"
+                    animation-delay="0"></round-progress>
+
         </md-content>
     </md-sidenav>
 </section>
