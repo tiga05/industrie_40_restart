@@ -5,6 +5,7 @@
     </md-select>
 </md-input-container></p>
 Anzahl der Bestellungen:
+<md-card >
 <table style="width:100%">
     <tr>
         <th>Bestellung</th>
@@ -17,7 +18,8 @@ Anzahl der Bestellungen:
         <td>{{info.timeStamp|date:'dd.MM.yyyy @ HH:mm'}}</td>
     </tr>
 </table>
-<div layout="row" layout-sm="column" layout-xs="column" class="layout-xs-column layout-sm-column layout-row">
+</md-card>
+<div layout="row" layout-sm="column" layout-xs="column" class="layout-xs-column layout-sm-column layout-row" ng-show="view3.checked">
 <md-card flex ng-repeat="charts in view3.chartRow">
     <md-card-title>
         <md-card-title-text>

@@ -18,8 +18,10 @@ class Navigation{
             },
             getCurrentStatus(){
                 // return Kafkadata.findOne({orderNumber:this.currentOrderNumber},{sort:{timeStamp:-1}})
-               var tempvar= Kafkadata.find({orderNumber:this.getReactively('currentOrderNumber.orderNumber')});
-                for(var i=0;i<tempvar.length;i++){
+               var tempvar= Kafkadata.find({orderNumber:this.getReactively('currentOrderNumber.orderNumber')}).fetch();
+                return tempvar.length;
+              //  return tempvar;
+               /* for(var i=0;i<tempvar.length;i++){
                     switch(tempvar[i].itemName){
                         case "L1": this.current=1;
                             break;
@@ -32,7 +34,7 @@ class Navigation{
                         case "L5":this.current=5;
                             break;
                     }
-                }
+                }*/
 return tempvar;
          /*       this.current= Kafkadata.findOne({
                     $or: [

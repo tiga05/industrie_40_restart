@@ -13,7 +13,7 @@ class View3 {
     constructor($interval, $scope, $reactive) {
         'ngInject';
         $reactive(this).attach($scope);
-        this.choosenOrderNumber="";
+        this.choosenOrderNumber=null;
         this.chartRow = [{name: 'Umdrehungen pro Minute', type: 'line', labels: [1, 2, 3], series: ['Drilling Speed','Milling Speed'], data: [[0],[0]],
             datasetOverride: [{yAxisID: 'y-axis-1'}, { yAxisID: 'y-axis-2' }],
             options: {
@@ -123,9 +123,10 @@ class View3 {
 
     }
     changeChoosenOrderNumber(input){
-        console.log(input);
+        //console.log(input);
         this.choosenOrderNumber=input;
-        console.log(this.choosenOrderNumber);
+        //console.log(this.choosenOrderNumber);
+        this.checked=true;
     }
 }
 
