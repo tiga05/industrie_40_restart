@@ -1,8 +1,12 @@
 <link rel="stylesheet"; href="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.css">
 <div ng-cloak>
-    <md-card><h3>  Aktueller Auftrag:{{view1.getCurrentOrder.orderNumber}}</h3></md-card>
-            <md-content class="md-padding md-primary" layout-xs="column" layout="row" >
-                <md-card ng-repeat="werte in view1.cardRow" ng-click="view1.changeChart(werte.type)">
+    <md-card>
+        <h3>  Aktueller Auftrag:{{view1.getCurrentOrder.orderNumber}}</h3>
+    </md-card>
+            <md-content class="md-padding md-primary" layout-xs="column" layout-sm="column" layout="row" >
+                <md-card ng-repeat="werte in view1.cardRow" ng-click="view1.changeChart(werte.type)"
+                         flex="100"
+                         flex-gt-sm="25">
                     <md-card-title>
                         <md-card-title-text>
                             <span class="md-headline">{{werte.name}}</span>
