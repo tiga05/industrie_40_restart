@@ -35,7 +35,7 @@ class View3 {
                         }]
                 }
             }
-        },{name: 'Hitzeverlauf', type: 'line', labels: [1, 2, 3,4,5], series: ['Drilling Heat','Milling Heat'], data: [[0],[0]],
+        },{name: 'Hitzeverlauf', type: 'line', labels: [1, 2, 3,4,5,6], series: ['Drilling Heat','Milling Heat'], data: [[0],[0]],
             datasetOverride: [{yAxisID: 'y-axis-1'}, { yAxisID: 'y-axis-2' }],
             options: {
                 animation: false,
@@ -92,6 +92,7 @@ class View3 {
                 for(var x;i<tempvar2.length;x++){
                     tempvar2[x]=Math.round(tempvar2[x]);
                 }*/
+    tempvar1.push(0);
                 this.chartRow[1].data[0]= tempvar1;
                 this.chartRow[1].data[1]=tempvar2;
             },
