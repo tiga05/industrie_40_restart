@@ -7,27 +7,26 @@
                            ng-value="number">{{number}}</md-option>
             </md-select>
         </md-input-container>
+
     </p>
 </md-card>
 <md-card>
-    Anzahl der Bestellungen:
-
     <table style="width:100%">
         <tr>
             <th>Bestellung</th>
             <th>Material</th>
             <th>Zeitpunkt</th>
         </tr>
-        <tr ng-repeat="info in view3.getCustomerOrderDetails | orderBy" style="text-align: center">
-            <td>
+        <tr ng-repeat="info in view3.getCustomerOrderDetails | orderBy" style="text-align: center" class="animate-repeat">
+            <td class="animate-repeat">
                 <md-button ng-click="view3.changeChoosenOrderNumber(info.orderNumber)">{{info.orderNumber}}</md-button>
             </td>
-            <td>{{info.materialNumber}}</td>
-            <td>{{info.timeStamp|date:'dd.MM.yyyy @ HH:mm'}}</td>
+            <td >{{info.materialNumber}}</td>
+            <td >{{info.timeStamp|date:'dd.MM.yyyy @ HH:mm'}}</td>
         </tr>
     </table>
 </md-card>
-<div layout="row" layout-sm="column" layout-xs="column" class="layout-xs-column layout-sm-column layout-row"
+<div layout="row" layout-sm="column" layout-xs="column" class="layout-xs-column layout-sm-column layout-row animate-show" style="padding: 0px"
      ng-show="view3.checked">
     <md-card flex ng-repeat="charts in view3.chartRow">
         <md-card-title>

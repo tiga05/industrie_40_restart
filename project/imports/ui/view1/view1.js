@@ -13,14 +13,16 @@ class View1 {
         'ngInject';
         $reactive(this).attach($scope);
         this.showCharttype = 'ds';
-
+        //cardRow beinhaltet die Grundeinstellungen von der cards, sowie deren Typ.
         this.cardRow = [
             {name: 'Drilling Speed', color: 'white', value: 0, status: 'aktuell', type: 'ds'},
             {name: 'Drilling Heat', color: 'white', value: 0, status: 'aktuell', type: 'dh'},
             {name: 'Milling Speed', color: 'white', value: 0, status: 'aktuell', type: 'ms'},
             {name: 'Milling Heat', color: 'white', value: 0, status: 'aktuell', type: 'mh'}
         ];
+        //this.type stellt die verschiedenen Charttypen, die mit angular-charts verwendet werden können, zur Verfügung.
         this.type = ['bar', 'line', 'pie', 'doughnut', 'radar'];
+        //In chartRow werden die verschiedenen Diagrammtypen initialisiert. Sie werden später dynamisch mit neuen Daten befüllt
         this.chartRow = [
             {
                 name: 'Drilling Speed',
@@ -114,6 +116,9 @@ class View1 {
         ];
 
         this.helpers({
+            //getCustomerInfos gibt ein Array zurück, in dem die bisher verwendeten Kundennummern, die Anzahl der Aufträge der Kundennummer und die letzte Bestellung gespeichert ist.
+            //Diese Abfrage läuft asynchron ab, weshalb es eine Callback-Funktion gibt, die entweder das Ergebnis oder einen Fehler zurückliefert.
+            //Das Ergebnis wird in einer Session-Variable gespeichert, die dann außerhalb der Meteor.call Funktion returned wird, sobald ein Ergebnis vorliegt.
             getCustomerInfos(){
                 Meteor.call('getCustomerInfos', function (error, result) {
                     if (error) {
@@ -124,13 +129,8 @@ class View1 {
                 });
                 return Session.get('customerInfos');
             },
-
-            getCustomerNumbers(){
-                return Amqpdata.find().fetch();
-            },
-            getOrderDetails(){
-                return Kafkadata.find({"orderNumber": this.getReactively('choosenOrderNumber')});
-            },
+            //Mit den folgenden Funktionen werden die Maximma des jeweils angeforderten itemName zurückgegeben. Dabei wird entsprechend durch den jeweils höchsten Umdrehungswert oder Hitzewert bestimmt.
+            //Die Funktion _.pluck trimmt das JSON-Objekt auf nur noch den geforderten Wert zurecht.
             getDHeatMaximum(){
                 return _.pluck(Kafkadata.find({itemName: 'DRILLING_HEAT'}, {
                     limit: 1,
@@ -155,30 +155,8 @@ class View1 {
                     sort: {intValue: -1}
                 }).fetch(), 'intValue');
             },
-            getDHeatAverage(){
-                return _.pluck(Kafkadata.find({itemName: 'DRILLING_HEAT'}, {
-                    limit: 1,
-                    sort: {intValue: -1}
-                }).fetch(), 'doubleValue');
-            },
-            getMHeatAverage(){
-                return _.pluck(Kafkadata.find({itemName: 'DRILLING_HEAT'}, {
-                    limit: 1,
-                    sort: {intValue: -1}
-                }).fetch(), 'doubleValue');
-            },
-            getDSpeedAverage(){
-                return _.pluck(Kafkadata.find({itemName: 'DRILLING_SPEED'}, {
-                    limit: 1,
-                    sort: {doubleValue: -1}
-                }).fetch(), 'intValue');
-            },
-            getMSpeedAverage(){
-                return _.pluck(Kafkadata.find({itemName: 'MILLING_SPEED'}, {
-                    limit: 1,
-                    sort: {doubleValue: -1}
-                }).fetch(), 'intValue');
-            },
+            //Mit den folgenden Funktionen werden die aktuellen Werte des jeweils angeforderten itemName zurückgegeben. Dabei ist die Datenbank-ID ausschlaggebend für den aktuellsten Wert.
+            //Die Funktion _.pluck trimmt das JSON-Objekt auf nur noch den geforderten Wert zurecht.
             getDHeatAktuell(){
                 return _.pluck(Kafkadata.find({itemName: 'DRILLING_HEAT'}, {
                     limit: 1,
@@ -203,13 +181,14 @@ class View1 {
                     sort: {_id: -1}
                 }).fetch(), 'intValue');
             },
+            //Mit den folgenden Funktionen werden die letzten 20 Werte des jeweils angeforderten itemName zurückgegeben. Dabei ist die Datenbank-ID ausschlaggebend für den aktuellsten Wert.
+            //Die Funktion _.pluck trimmt das JSON-Objekt auf nur noch die geforderten Werte zurecht. Am Ende werden die Daten der entsprechenden Chart hinzugefügt.
             getChartDSpeedAktuell(){
                 var temp2 = _.pluck(Kafkadata.find({itemName: 'DRILLING_SPEED'}, {
                     limit: 20,
                     sort: {_id: -1}
                 }).fetch(), 'intValue');
                 this.chartRow[0].data[0] = temp2;
-                return temp2;
             },
             getChartMSpeedAktuell(){
                 var temp2 = _.pluck(Kafkadata.find({itemName: 'MILLING_SPEED'}, {
@@ -217,7 +196,6 @@ class View1 {
                     sort: {_id: -1}
                 }).fetch(), 'intValue');
                 this.chartRow[2].data[0] = temp2;
-                return temp2;
             },
             getChartDHeatAktuell(){
                 var temp2 = _.pluck(Kafkadata.find({itemName: 'DRILLING_HEAT'}, {
@@ -225,7 +203,6 @@ class View1 {
                     sort: {_id: -1}
                 }).fetch(), 'doubleValue');
                 this.chartRow[1].data[0] = temp2;
-                return temp2;
             },
             getChartMHeatAktuell(){
                 var temp2 = _.pluck(Kafkadata.find({itemName: 'MILLING_HEAT'}, {
@@ -233,8 +210,9 @@ class View1 {
                     sort: {_id: -1}
                 }).fetch(), 'doubleValue');
                 this.chartRow[3].data[0] = temp2;
-                return temp2;
             },
+            //holt sich die aktuelle OrderNumber abhängig von der höchsten ID in der Datenbank. Höchste ID = aktuellster Auftrag.
+            //Die Funktion _.pluck trimmt das JSON-Objekt auf nur noch die geforderten Werte zurecht. Am Ende werden die Daten der entsprechenden Chart hinzugefügt.
             getCurrentOrder2(){
                 var tempvar1 = _.pluck(Kafkadata.find({}, {
                     limit: 1,
@@ -244,20 +222,19 @@ class View1 {
             },
         });
     }
-
+    //Auf der Oberfläche lauscht ein scope auf die Änderung des Status der Card mit einem ng-if. Wenn der Status mit dem in der ng-if Abfrage übereinstimmt, so wird diese Card eingeblendet
+    //und alle anderen Cards ausgeblendet.
     changeStatus(statusNeu, type) {
-        var test342 = statusNeu;
-
         for (var i = 0; i < this.cardRow.length; i++) {
             if (this.cardRow[i].type == type) {
-                this.cardRow[i].status = test342;
+                this.cardRow[i].status = statusNeu;
                 break;
             }
-
         }
-
     }
-
+    //Mit einem klick auf den entsprechenden Button in der Oberfläche, wird diese Funktion ausgelöst. Hierüber wird der aktuelle Charttyp gesetzt.
+    //Mit einer ng-if Abfrage 'lauscht' der Scope auf der Oberfläche auf die Änderung dieser Variable. Wenn der Diagramm typ mit dem in ng-if abgefragten Typ übereinstimmt,
+    //wird dieser eingblendet und alle anderen Diagramme ausgeblendet.
     changeChart(type) {
         this.showCharttype = type;
     }
@@ -275,6 +252,7 @@ export default angular.module(name, [
 })
 
     .config(config)
+    //dies ist ein spezieller Filter, welche alle Werte auf zwei Nachkommastellen rundet.
     .filter('roundup', function () {
         return function (input) {
             if (isNaN(input)) return input;

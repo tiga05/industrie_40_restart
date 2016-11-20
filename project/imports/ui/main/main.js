@@ -9,7 +9,8 @@ import {name as Navigation} from '../navigation/navigation';
 import {name as Toolbar} from '../toolbar/toolbar';
 import {name as View1} from '../view1/view1';
 import {name as View3} from '../view3/view3';
-
+// "Haupt"-Javascript-Datei. Hier werden alle Views und Elemente importiert und über die HTML-Datei entsprechend eingeblendet.
+// Der Angular-UI-Router erlaubt das dynamische einblenden der Views über die Buttons in der Navigation.html
 class Main {
 }
 
@@ -31,9 +32,9 @@ export default angular.module(name, [
     .config(config);
 function config($mdThemingProvider, $urlRouterProvider) {
     'ngInject';
-
+    //festlegen der Standardseite. Wenn ein URL-Pfad unbekannt sein sollte, landet man auf der Seite allgemein
     $urlRouterProvider.otherwise('/Allgemein');
-
+    //festlegen der Farbpalette. Die Farben sind von Angular-Material vorgegeben.
     $mdThemingProvider
         .theme('default')
         .primaryPalette('orange')
