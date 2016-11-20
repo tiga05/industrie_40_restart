@@ -87,40 +87,10 @@ class View3 {
                     {itemName:'MILLING_HEAT'}]}).fetch(),'doubleValue');
                 console.log("DRILLING_HEAT"+tempvar1);
                 console.log("MILLING_HEAT"+tempvar2);
-    /*            for(var i;i<tempvar1.length;i++){
-                    tempvar1[i]=Math.round(tempvar1[i]);
-                }
-                for(var x;i<tempvar2.length;x++){
-                    tempvar2[x]=Math.round(tempvar2[x]);
-                }*/
     tempvar1.push(0);
                 this.chartRow[1].data[0]= tempvar1;
                 this.chartRow[1].data[1]=tempvar2;
             },
-/*            getCustomerOrderDetailsChartDs(){
-                var tempvar1=Kafkadata.find({$and:[
-                    {orderNumber: this.getReactively('choosenOrderNumber')},
-                    {itemName:'DRILLING_SPEED'}]});
-                return tempvar1;
-            },
-                getCustomerOrderDetailsChartDh(){
-                var tempvar1=Kafkadata.find({$and:[
-                    {orderNumber: this.getReactively('choosenOrderNumber')},
-                    {itemName:'DRILLING_HEAT'}]});
-                return tempvar1;
-            },
-            getCustomerOrderDetailsChartMs(){
-                var tempvar1=Kafkadata.find({$and:[
-                    {orderNumber: this.getReactively('choosenOrderNumber')},
-                    {itemName:'MILLING_SPEED'}]});
-                return tempvar1;
-            },
-            getCustomerOrderDetailsChartMh(){
-                var tempvar1=Kafkadata.find({$and:[
-                    {orderNumber: this.getReactively('choosenOrderNumber')},
-                    {itemName:'MILLING_HEAT'}]});
-                return tempvar1;
-            }*/
         });
 
     }
