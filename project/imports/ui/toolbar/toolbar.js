@@ -6,7 +6,7 @@ import template from './toolbar.html';
 const name = 'toolbar';
 
 class Toolbar{
-    constructor( $scope, $mdSidenav, $log) {
+    constructor( $mdSidenav) {
         'ngInject';
         this.sidenav=$mdSidenav;
     }

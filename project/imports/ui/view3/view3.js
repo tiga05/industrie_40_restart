@@ -10,7 +10,7 @@ import {Amqpdata} from '../../api/amqpdata';
 const name = 'view3';
 
 class View3 {
-    constructor($interval, $scope, $reactive) {
+    constructor($scope, $reactive) {
         'ngInject';
         $reactive(this).attach($scope);
         // Initialisierung der Diagrammvariablen; teilweilse Befüllung mit Dummy-Daten
@@ -85,8 +85,6 @@ class View3 {
                 var tempvar2= _.pluck(Kafkadata.find({$and:[
                     {orderNumber: this.getReactively('choosenOrderNumber')},
                     {itemName:'MILLING_HEAT'}]}).fetch(),'doubleValue');
-                console.log("DRILLING_HEAT"+tempvar1);
-                console.log("MILLING_HEAT"+tempvar2);
     tempvar1.push(0);
                 this.chartRow[1].data[0]= tempvar1;
                 this.chartRow[1].data[1]=tempvar2;
@@ -95,14 +93,11 @@ class View3 {
 
     }
     changeChoosenOrderNumber(input){
-        //console.log(input);
         this.choosenOrderNumber=input;
-        //console.log(this.choosenOrderNumber);
         this.checked=true;
     }
 }
 
-// create a module
 export default angular.module(name, [
     angularMeteor,
     angularCharts,

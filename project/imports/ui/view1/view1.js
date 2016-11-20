@@ -3,26 +3,15 @@ import angularMeteor from 'angular-meteor';
 import uiRouter from 'angular-ui-router';
 import template from './view1.html';
 import angularCharts from 'angular-chart.js';
-import ngTable from 'ng-table';
-//import angularTable from 'angular-material-data-table';
 import {Kafkadata} from '../../api/kafkadata';
 import {Amqpdata} from '../../api/amqpdata';
-//import angulaPromiser from 'angular-meteor-promiser';
-//import {TableComponent} from './component/table.component';
-import '../../api/serverMethods';
 
 const name = 'view1';
 
 class View1 {
-    constructor($interval, $scope, $reactive) {
+    constructor($scope, $reactive) {
         'ngInject';
-        this.checked = true;
         $reactive(this).attach($scope);
-        this.orderNumbers;
-        this.testvarbla = 5;
-        this.maximum = "maximum";
-        this.average = "average";
-        this.aktuell = "aktuell";
         this.showCharttype = 'ds';
 
         this.cardRow = [
@@ -38,8 +27,8 @@ class View1 {
                 ctype: 'ds',
                 type: 'line',
                 labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
-                series: ['Series A'],
-                data: [0, 3, 0, 0, 3, 0, 0, 0, 0, 0],
+                series: ['Drilling Speed'],
+                data: [[0]],
                 datasetOverride: [{yAxisID: 'y-axis-1'}],
                 options: {
                     animation: false,
@@ -60,8 +49,8 @@ class View1 {
                 ctype: 'dh',
                 type: 'line',
                 labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
-                series: ['Series A'],
-                data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                series: ['Drilling Heat'],
+                data: [[0]],
                 datasetOverride: [{yAxisID: 'y-axis-1'}],
                 options: {
                     animation: false,
@@ -82,8 +71,8 @@ class View1 {
                 ctype: 'ms',
                 type: 'line',
                 labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
-                series: ['Series A'],
-                data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                series: ['Milling Speed'],
+                data: [[0]],
                 datasetOverride: [{yAxisID: 'y-axis-1'}],
                 options: {
                     animation: false,
@@ -104,8 +93,8 @@ class View1 {
                 ctype: 'mh',
                 type: 'line',
                 labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
-                series: ['Series A'],
-                data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                series: ['Milling Heat'],
+                data: [[0]],
                 datasetOverride: [{yAxisID: 'y-axis-1'}],
                 options: {
                     animation: false,
@@ -126,12 +115,11 @@ class View1 {
 
         this.helpers({
             getCustomerInfos(){
-
-                var tempvar1 = Meteor.call('getCustomerInfos', function (error, result) {
+                Meteor.call('getCustomerInfos', function (error, result) {
                     if (error) {
                         console.log('Methode getCustomer hat nicht funktioniert');
                     } else {
-                        Session.set('customerInfos',result);
+                        Session.set('customerInfos', result);
                     }
                 });
                 return Session.get('customerInfos');
@@ -191,59 +179,60 @@ class View1 {
                     sort: {doubleValue: -1}
                 }).fetch(), 'intValue');
             },
-            getDHeataktuell(){
-                var ausgabe1 = Kafkadata.find({itemName: 'DRILLING_HEAT'}, {limit: 1, sort: {_id: -1}}).fetch()
-                var ausgabe2 = _.pluck(ausgabe1, 'doubleValue');
-                return ausgabe2;
+            getDHeatAktuell(){
+                return _.pluck(Kafkadata.find({itemName: 'DRILLING_HEAT'}, {
+                    limit: 1,
+                    sort: {_id: -1}
+                }).fetch(), 'doubleValue');
             },
-            getMHeataktuell(){
+            getMHeatAktuell(){
                 return _.pluck(Kafkadata.find({itemName: 'MILLING_HEAT'}, {
                     limit: 1,
                     sort: {_id: -1}
                 }).fetch(), 'doubleValue');
             },
-            getDSpeedaktuell(){
+            getDSpeedAktuell(){
                 return _.pluck(Kafkadata.find({itemName: 'DRILLING_SPEED'}, {
                     limit: 1,
                     sort: {_id: -1}
                 }).fetch(), 'intValue');
             },
-            getMSpeedaktuell(){
+            getMSpeedAktuell(){
                 return _.pluck(Kafkadata.find({itemName: 'MILLING_SPEED'}, {
                     limit: 1,
                     sort: {_id: -1}
                 }).fetch(), 'intValue');
             },
-            getChartDSpeedaktuell(){
+            getChartDSpeedAktuell(){
                 var temp2 = _.pluck(Kafkadata.find({itemName: 'DRILLING_SPEED'}, {
                     limit: 20,
                     sort: {_id: -1}
                 }).fetch(), 'intValue');
-                this.chartRow[0].data = temp2;
+                this.chartRow[0].data[0] = temp2;
                 return temp2;
             },
-            getChartMSpeedaktuell(){
+            getChartMSpeedAktuell(){
                 var temp2 = _.pluck(Kafkadata.find({itemName: 'MILLING_SPEED'}, {
                     limit: 20,
                     sort: {_id: -1}
                 }).fetch(), 'intValue');
-                this.chartRow[2].data = temp2;
+                this.chartRow[2].data[0] = temp2;
                 return temp2;
             },
-            getChartDHeataktuell(){
+            getChartDHeatAktuell(){
                 var temp2 = _.pluck(Kafkadata.find({itemName: 'DRILLING_HEAT'}, {
                     limit: 20,
                     sort: {_id: -1}
                 }).fetch(), 'doubleValue');
-                this.chartRow[1].data = temp2;
+                this.chartRow[1].data[0] = temp2;
                 return temp2;
             },
-            getChartMHeataktuell(){
+            getChartMHeatAktuell(){
                 var temp2 = _.pluck(Kafkadata.find({itemName: 'MILLING_HEAT'}, {
                     limit: 20,
                     sort: {_id: -1}
                 }).fetch(), 'doubleValue');
-                this.chartRow[3].data = temp2;
+                this.chartRow[3].data[0] = temp2;
                 return temp2;
             },
             getCurrentOrder2(){
@@ -254,43 +243,14 @@ class View1 {
                 return tempvar1.toString();
             },
         });
-
     }
 
-    update() {
-        for (var i = 0; i < this.cardRow.length; i++) {
-            this.cardRow[i].value = Math.round((Math.random() * 10) * 10);
-            var value = this.cardRow[i].value;
-            switch (true) {
-                case (value > 80):
-                    this.cardRow[i].color = 'red';
-                    break;
-                case (value > 60):
-                    this.cardRow[i].color = 'orange';
-                    break;
-                case (value > 40):
-                    this.cardRow[i].color = 'yellow';
-                    break;
-                default:
-                    this.cardRow[i].color = 'green';
-                    break;
-            }
-        }
-        for (var y = 0; y < this.chartRow.length; y++) {
-            for (var z = 0; z < this.chartRow[y].data.length; z++) {
-                this.chartRow[y].data[z] = this.chartRow[y].data[z + 1];
-            }
-            this.chartRow[y].data[z - 1] = Math.round((Math.random() * 10) * 10);
-        }
-    }
-
-    changestatus(statusNeu, type) {
+    changeStatus(statusNeu, type) {
         var test342 = statusNeu;
 
         for (var i = 0; i < this.cardRow.length; i++) {
             if (this.cardRow[i].type == type) {
                 this.cardRow[i].status = test342;
-                //console.log(test342);
                 break;
             }
 
@@ -300,24 +260,15 @@ class View1 {
 
     changeChart(type) {
         this.showCharttype = type;
-        var test333 = type;
-        //console.log(test333);
     }
 
 }
 
-//View1.$inject = ['NgTableParams'];
-// create a module
 export default angular.module(name, [
     angularMeteor,
     angularCharts,
     uiRouter,
-    // angulaPromiser,
-    //'ngTable'
-    //angularTable,
-    //helpers
 ]).component(name, {
-//ngTable,
     template,
     controllerAs: name,
     controller: View1
