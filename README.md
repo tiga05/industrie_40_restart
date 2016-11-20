@@ -1,6 +1,4 @@
 # industrie_40_restart
-Nearly full working copy of the first mockup with modularity and working Meteor Framework
-
 #Installation
 Zur Nutzung:
 - Installation von Meteor https://www.meteor.com/install
