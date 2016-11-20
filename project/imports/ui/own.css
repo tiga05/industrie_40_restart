@@ -36,3 +36,17 @@ th {
     background-color: #ff9800;
     color: white;
 }
+
+.progress-wrapper{
+    position: relative;
+}
+.progress-wrapper .progressBarText{
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    text-align: center;
+    width: 100%;
+    z-index: 1;
+}

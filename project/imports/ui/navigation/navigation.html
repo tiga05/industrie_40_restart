@@ -9,9 +9,9 @@
             <!--<md-button class="toolbareintraege md-accent" ui-sref="view2" ng-click="navigation.toggleLeft()">Bestellungen</md-button>-->
             <md-button class="toolbareintraege md-accent" ui-sref="view3" ng-click="navigation.toggleLeft()">Kunden</md-button>
 
-<!--        <md-content layout-padding style="overflow:initial">
+        <md-content layout-padding style="overflow:initial" class="progress-wrapper">
             Zustand des aktuellen Auftrags:
-            <div>Aktueller Auftrag:{{navigation.getCurrentOrder.orderNumber}}</div>
+            <div>Aktueller Auftrag:{{navigation.getCurrentOrder}}</div>
             <round-progress
                     max="31"
                     current="navigation.getCurrentStatus"
@@ -26,7 +26,6 @@
                     duration="800"
                     animation="easeInOutQuart"
                     animation-delay="0"></round-progress>
-
-        </md-content>-->
+        </md-content>
     </md-sidenav>
 </section>
